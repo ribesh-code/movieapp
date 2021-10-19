@@ -1,19 +1,21 @@
-class MovieModel {
-  bool? video;
-  double? voteAverage;
-  String? overview;
-  String? releaseDate;
-  int? voteCount;
-  bool? adult;
-  String? backdropPath;
-  String? title;
-  List<int>? genreIds;
-  int? id;
-  String? originalLanguage;
-  String? originalTitle;
-  String? posterPath;
-  double? popularity;
-  String? mediaType;
+import 'package:movieapp/domain/entities/movie_entity.dart';
+
+class MovieModel extends MovieEntity {
+  final int id;
+  final bool? video;
+  final double? voteAverage;
+  final String? overview;
+  final String? releaseDate;
+  final int? voteCount;
+  final bool? adult;
+  final String? backdropPath;
+  final String? title;
+  final List<int>? genreIds;
+  final String? originalLanguage;
+  final String? originalTitle;
+  final String? posterPath;
+  final double? popularity;
+  final String? mediaType;
 
   MovieModel(
       {this.video,
@@ -25,29 +27,40 @@ class MovieModel {
       this.backdropPath,
       this.title,
       this.genreIds,
-      this.id,
+      required this.id,
       this.originalLanguage,
       this.originalTitle,
       this.posterPath,
       this.popularity,
-      this.mediaType});
+      this.mediaType})
+      : super(
+          id: id,
+          title: title,
+          backdropPath: backdropPath,
+          posterPath: posterPath,
+          releaseDate: releaseDate,
+          voteAverage: voteAverage,
+          overview: overview,
+        );
 
-  MovieModel.fromJson(Map<String, dynamic> json) {
-    video = json['video'];
-    voteAverage = json['vote_average'];
-    overview = json['overview'];
-    releaseDate = json['release_date'];
-    voteCount = json['vote_count'];
-    adult = json['adult'];
-    backdropPath = json['backdrop_path'];
-    title = json['title'];
-    genreIds = json['genre_ids'].cast<int>();
-    id = json['id'];
-    originalLanguage = json['original_language'];
-    originalTitle = json['original_title'];
-    posterPath = json['poster_path'];
-    popularity = json['popularity'];
-    mediaType = json['media_type'];
+  factory MovieModel.fromJson(Map<String, dynamic> json) {
+    return MovieModel(
+      video: json['video'],
+      voteAverage: json['vote_average'],
+      overview: json['overview'],
+      releaseDate: json['release_date'],
+      voteCount: json['vote_count'],
+      adult: json['adult'],
+      backdropPath: json['backdrop_path'],
+      title: json['title'],
+      genreIds: json['genre_ids'].cast<int>(),
+      id: json['id'],
+      originalLanguage: json['original_language'],
+      originalTitle: json['original_title'],
+      posterPath: json['poster_path'],
+      popularity: json['popularity'],
+      mediaType: json['media_type'],
+    );
   }
 
   Map<String, dynamic> toJson() {

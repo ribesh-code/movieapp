@@ -5,7 +5,7 @@ class MovieEntity extends Equatable {
   final int id;
   final String? backdropPath;
   final String? title;
-  final String? voteAverage;
+  final double? voteAverage;
   final String? releaseDate;
   final String? overview;
 
