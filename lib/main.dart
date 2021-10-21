@@ -2,13 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:movieapp/data/core/api_client.dart';
 import 'package:movieapp/data/data_source/remote/movie_remote_data_source.dart';
+import 'package:movieapp/data/respositories/movie_repo_impl.dart';
+import 'package:movieapp/domain/repositories/movie_repo.dart';
+import 'package:movieapp/domain/usecases/get_trending.dart';
 
 void main() {
   Client _http = Client();
   ApiClient apiClient = ApiClient(_http);
   MovieRemoteDataSource dataSource = MovieRemoteDataSourceImpl(apiClient);
-  dataSource.getTrending();
-  dataSource.getPopular();
+  MovieRepo movieRepo = MovieRepoImpl(movieRemoteDataSource: dataSource);
+  GetTrending getTrending = GetTrending(movieRepo: movieRepo);
+  getTrending();
   runApp(const MyApp());
 }
 
