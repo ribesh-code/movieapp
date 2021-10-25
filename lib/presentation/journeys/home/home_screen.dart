@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movieapp/di/get_it.dart';
 import 'package:movieapp/presentation/journeys/home/movie_carousel/movie_carousel_widget.dart';
+import 'package:movieapp/presentation/journeys/home/movie_tab/movie_tab_widget.dart';
 import 'package:movieapp/presentation/states/movie_backdrop/movie_backdrop_bloc.dart';
 import 'package:movieapp/presentation/states/movie_carousel/movie_carousel_bloc.dart';
+import 'package:movieapp/presentation/states/movie_tabbed/movie_tabbed_bloc.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -15,10 +17,12 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   late MovieCarouselBloc movieCarouselBloc;
   late MovieBackdropBloc movieBackdropBloc;
+  late MovieTabbedBloc movieTabbedBloc;
   @override
   void initState() {
     movieCarouselBloc = getInstance<MovieCarouselBloc>();
     movieBackdropBloc = movieCarouselBloc.movieBackdropBloc;
+    movieTabbedBloc = getInstance<MovieTabbedBloc>();
     movieCarouselBloc.add(const CarouselLoadEvent());
     super.initState();
   }
@@ -27,6 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void dispose() {
     movieCarouselBloc.close();
     movieBackdropBloc.close();
+    movieTabbedBloc.close();
     super.dispose();
   }
 
@@ -39,6 +44,9 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         BlocProvider(
           create: (context) => movieBackdropBloc,
+        ),
+        BlocProvider(
+          create: (context) => movieTabbedBloc,
         ),
       ],
       child: Scaffold(
@@ -59,14 +67,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 const FractionallySizedBox(
                   alignment: Alignment.bottomCenter,
                   heightFactor: 0.4,
-                  child: Placeholder(
-                    color: Colors.white,
-                  ),
+                  child: MovieTabWidget(),
                 )
               ],
             );
           }
-          return SizedBox.shrink();
+          return const SizedBox.shrink();
         },
       )),
     );
