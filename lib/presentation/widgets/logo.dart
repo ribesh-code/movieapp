@@ -7,8 +7,8 @@ class Logo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Image.network(
-      'https://www.pinclipart.com/picdir/middle/4-48708_film-background-cliparts-movie-logo-without-background-png.png',
+    return Image.asset(
+      'assets/pngs/logo.png',
       color: Colors.white,
       height: height.h.toDouble(),
     );
